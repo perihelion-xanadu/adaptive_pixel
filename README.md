@@ -2,7 +2,7 @@
 
 A grid-world cellular simulation where simple agents develop adaptive behavior through rule plasticity, goal-priority updates, and indirect competition via shared resources. Think of it as *Game of Life with learning agents* — watch a simple mind learn its world.
 
-Built with React + Vite. The simulation logic lives entirely in `prototype/src/simulation/`; the standalone monolithic version is `adaptive-mind-sim.jsx`.
+Built with Claude Code, React + Vite. The simulation logic lives entirely in `prototype/src/simulation/`; the standalone monolithic version is `adaptive-mind-sim.jsx`.
 
 ---
 
