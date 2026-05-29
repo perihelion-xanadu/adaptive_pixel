@@ -35,5 +35,53 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Run E2E browser tests
+        run: npm run test:e2e
+
       - name: Build production bundle
         run: npm run build
+
+  build-tauri:
+    name: Build Tauri Portable Executable
+    runs-on: windows-latest
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    defaults:
+      run:
+        working-directory: prototype
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: prototype/package-lock.json
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: prototype/src-tauri -> target
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Tauri portable executable
+        run: npm run build:portable
+
+      - name: Upload portable executable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: adaptive-pixel-portable-windows
+          path: prototype/src-tauri/target/release/adaptive-pixel.exe
+
