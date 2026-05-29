@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { PARAM_META } from "../simulation/constants.js";
 
 // Group order for display

@@ -1,7 +1,7 @@
 import { CELL_TYPES, ACTIONS, DIRS, INITIAL_JITTER } from "./constants.js";
 import { makeVisitMap, senseNeighbors, getQuadrant } from "./world.js";
 
-export function makeRuleNodes(config) {
+export function makeRuleNodes() {
   const j = () => (Math.random() - 0.5) * INITIAL_JITTER;
   return [
     { id: 0,  label: "Flee hazard N", condition: "hazard_north", action: "south", weight: 0.8 + j(), plasticity: 1.0, activations: 0, lastFiredStep: 0, category: "safety" },
@@ -38,7 +38,7 @@ export function makeStats() {
 export function makeAgent(startPos, config) {
   return {
     pos: startPos,
-    rules: makeRuleNodes(config),
+    rules: makeRuleNodes(),
     goals: makeGoals(),
     stats: makeStats(),
     visitMap: makeVisitMap(config),
@@ -85,6 +85,7 @@ export function agentStep(
   visitMap, lastDirection, otherAgentPositions = [],
   pendingFood = [], worldStep = 0, config
 ) {
+  void worldStep;
   const G = config.GRID;
   const HARDENING_BY_CATEGORY = {
     safety:  config.HARDENING_SAFETY,

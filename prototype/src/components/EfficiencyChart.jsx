@@ -1,4 +1,4 @@
-import { ROLLING_WINDOW, AGENT_COLORS } from "../simulation/constants.js";
+import { ROLLING_WINDOW } from "../simulation/constants.js";
 
 const W = 552, H = 110;
 
